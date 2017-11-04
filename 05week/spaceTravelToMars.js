@@ -43,8 +43,10 @@ class Ship {
     }
     if (good2go==true){
       return this.ability;
+      console.log(this.ability);
     }else{
       return "Can't perform a mission yet."
+      console.log("Can't perform a mission yet.");
     }
   } // returns the ship's ability as a string if there is a crewmember whose job matches the ship, otherwise should return "Can't perform a mission yet."
 }
