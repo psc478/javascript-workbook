@@ -31,7 +31,7 @@ class Ship {
     this.ability = ability;
     this.crew = [];
   }
-  missionStatement() {
+  missionStatement() { //This function returns the mission of the ship if properly crewed and "Can't perform a mission yet." if not
     console.log("Begin Mission Statement");
     //console.log("Ship Type: "+(this.type));
     for (let i=0; i<this.crew.length; i++){
@@ -42,15 +42,20 @@ class Ship {
       }
     }
     if (good2go==true){
+      //console.log(this.ability);
+      good2go=null; //need to reset because good2go is a global variable
       return this.ability;
-      console.log(this.ability);
     }else{
+      //console.log("Can't perform a mission yet.");
       return "Can't perform a mission yet."
-      console.log("Can't perform a mission yet.");
     }
   } // returns the ship's ability as a string if there is a crewmember whose job matches the ship, otherwise should return "Can't perform a mission yet."
 }
 
+/*
+*
+* Test code to verify everything works. Everything works as of 8:55PM CT 2017-11-3.
+*
 let TestCrew = new CrewMember('Joe Doe', 'programmer', 'botany');
 let TestShip = new Ship('Janus','Repair Ship','Start shoveling bodies.');
 TestShip.missionStatement();
@@ -59,6 +64,8 @@ console.log(TestShip.crew[0]);
 let crewMemberJob = TestShip.crew[0].job;
 console.log("Crew Member Job Type: "+crewMemberJob);
 TestShip.missionStatement();
+*/
+
 
 
 //tests
