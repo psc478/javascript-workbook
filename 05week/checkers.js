@@ -7,9 +7,26 @@ const rl = readline.createInterface({
   output: process.stdout
 });
 
+let playerTurn = 'O';
 
-function Checker() {
-  // Your code here
+/*function Checker() {
+  this.king = no;
+  this.symbol =
+  //define Checker attributes
+  //checker.create per checker
+}*/
+
+class Checker {
+  constructor(symbol, king){
+    this.symbol = symbol;
+    this.king = king;
+    //this.row = game.board.grid[row];
+    //this.column = game.board.grid[column];
+    //this.where = this.row.tostring() + this.column.tostring();
+  }
+  moveChecker(whichPiece, toWhere){
+
+  }
 }
 
 function Board() {
@@ -21,7 +38,16 @@ function Board() {
       this.grid[row] = [];
       // push in 8 columns of nulls
       for (let column = 0; column < 8; column++) {
-        this.grid[row].push(null);
+       if (((row%2==0)&&(column%2!=0))||((row%2!=0)&&(column%2==0))) {
+          if (row<3){
+            this.grid[row].push(new Checker('X',false));
+          }
+          if (row>4){
+            this.grid[row].push(new Checker('O',false));
+          }
+        }else{
+          this.grid[row].push(null);
+        }
       }
     }
   };
@@ -57,15 +83,100 @@ function Board() {
 function Game() {
 
   this.board = new Board();
+  this.moveChecker = function(whichPiece, toWhere){
+    let x1 = Number(whichPiece.charAt(0));
+    let y1 = Number(whichPiece.charAt(1));
+    let x2 = Number(toWhere.charAt(0));
+    let y2 = Number(toWhere.charAt(1));
+    //If the player enters an empty square as whichPiece
+    if (game.board.grid[y1][x1]===null){
+      console.log("The square you specified in response to 'Which piece?' has no piece in it. Please try again.")
+      return;
+    }
 
+    //If the 'O' player enters a square with the wrong piece as whichPiece
+    if (playerTurn==='O'){
+      if(game.board.grid[y1][x1].symbol==='X'){
+        console.log("The square you specified in response to 'Which piece?' has an 'X' piece in it. Please try again.")
+        return;
+      }else{
+        if(game.board.grid[y2][x2]!=null){
+          console.log("The square you are trying to move to is already occupied. Please try again.")
+          return;
+        }else{
+//          if (((y2!=y1+1)&&(Math.abs(x2-x1)!=1))||
+//          (((y2!=y1+2)&&(Math.abs(x2-x1)!=2))&&
+//          (((x2>x1)&&(game.board.grid[y1+1][x1+1].symbol!='X'))||
+//          ((x1>x2)&&(game.board.grid[y1+1][x1-1].symbol!='X'))))){
+//            console.log("The square you want to move to is not diagonal from the square with the piece in it. Please try again.");
+//            return;
+//          }else{
+            let currentChecker = game.board.grid[y1][x1];
+            game.board.grid[y2].splice(x2,1,currentChecker);
+            game.board.grid[y1].splice(x1,1,null);
+            if (Math.abs(x2-x1)==2){
+              let deadx = (x1+x2)/2;
+              let deady = (y1+y2)/2;
+              game.board.grid[deady].splice(deadx,1,null);
+            }
+
+//          }
+        }
+
+
+        //if toWhere is diagonal and empty, move piece
+        //if toWhere is diagonal and occupied by same piece, console.log error
+        //if toWhere is diagonal and occupied by opposite piece and the space diagonal from THAT is empty, capture piece
+        //if toWhere row is 0, king
+        //if king, allow backwards moves
+        //repetitive captures (if possible)
+      }
+      playerTurn='X';
+      return;
+    }
+
+    //If the 'X' player enters a square with the wrong piece as whichPiece
+    if (playerTurn==='X'){
+      if(game.board.grid[y1][x1].symbol==='O'){
+        console.log("The square you specified in response to 'Which piece?' has an 'X' piece in it. Please try again.")
+        return;
+      }else{
+        if(game.board.grid[y2][x2]!=null){
+          console.log("The square you are trying to move to is already occupied. Please try again.")
+          return;
+        }else{
+            let currentChecker = game.board.grid[y1][x1];
+            game.board.grid[y2].splice(x2,1,currentChecker);
+            game.board.grid[y1].splice(x1,1,null);
+            if (Math.abs(x2-x1)==2){
+              let deadx = (x1+x2)/2;
+              let deady = (y1+y2)/2;
+              game.board.grid[deady].splice(deadx,1,null);
+            }
+          }
+        //if toWhere is diagonal and empty, move piece
+        //if toWhere is diagonal and occupied by same piece, console.log error
+        //if toWhere is diagonal and occupied by opposite piece and the space diagonal from THAT is empty, capture piece
+        //if toWhere row is 0, king
+        //if king, allow backwards moves
+        //repetitive captures (if possible)
+      }
+      playerTurn='O';
+      return;
+    }
+  }
+  //define moveChecker function
+  //flip between players
   this.start = function() {
     this.board.createGrid();
+    console.log('Refer to each piece/space by the column number then row number such as "10" or "67"')
     // Your code here
   };
 }
 
 function getPrompt() {
   game.board.viewGrid();
+  console.log("It's Player " + playerTurn + "'s turn.");
   rl.question('which piece?: ', (whichPiece) => {
     rl.question('to where?: ', (toWhere) => {
       game.moveChecker(whichPiece, toWhere);
