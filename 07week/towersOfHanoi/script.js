@@ -5,6 +5,7 @@ class TowersOfHanoi extends React.Component {
     super(props);
     this.state = {
               $block: null,
+              removedDiv: null,
               A: [100,75,50,25],
               B: [],
               C: []
@@ -18,6 +19,7 @@ class TowersOfHanoi extends React.Component {
   *@param event Clicking on the stacks
   */
   movePiece(event) {
+    //debugger;
     console.log("The event object: ", event);
     console.log("The element clicked: ", event.target);
     console.log("The value is: ", event.target.getAttribute("data-stack"));
@@ -40,7 +42,8 @@ class TowersOfHanoi extends React.Component {
         //this.state.$block = $stack[$stack.length-1];
         //$stack.splice(($stack.length-1),1);
         this.state.$block = $stack.pop();
-        //event.children().last().detach();
+        //debugger;
+        this.state.removedDiv = event.target.removeChild(event.target.lastChild);
         let newBlock = this.state.$block;
         let stillA = this.state.A;
         let stillB = this.state.B;
@@ -58,6 +61,7 @@ class TowersOfHanoi extends React.Component {
         } else {
         //$stack.splice($stack[$stack.length-1],0,this.state.$block);
         $stack.push(this.state.$block);
+        event.target.appendChild(this.state.removedDiv);
         this.state.$block = null;
         let newBlock = this.state.$block;
         let newA = this.state.A;
