@@ -1,57 +1,3 @@
-/*
-
-'use strict';
-
-class ListUsers extends React.Component{
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      user: []
-    }
-    this.test = this.test.bind(this);
-  }
-
-  test(){
-    let fetchedUsers = [];
-
-    let p = fetch('https://reqres.in/api/users?page=2');
-    let jsonPromise = p.then(function(response){
-      console.log("status of my respons",(response.status));
-      return response.json();
-    });
-
-    fetchedUsers = jsonPromise.then(function(data){
-      console.log("the data is ", data);
-      //this is where you update your state
-      fetchedUsers.push(<div>QQQ</div>);
-      fetchedUsers.push(<div>LLL</div>);
-      return fetchedUsers;
-    //  console.log("fetchedUsers: ", fetchedUsers);
-    });
-    this.setState({users: fetchedUsers});
-  }
-
-  render(){
-
-    //console.log("result of my fetch",p);
-
-    this.test();
-
-    return(
-      <div>
-        {this.state.users}
-      </div>
-    )
-  }
-
-
-}
-
-ReactDOM.render(<ListUsers />, document.getElementById('fetch'))
-
-*/
-
 'use strict';
 
 class ListUsers extends React.Component{
@@ -81,9 +27,17 @@ class ListUsers extends React.Component{
   renderUsers() {
     return this.state.users.map(function($user) {
       //return (<li key={$user.id}>{$user.first_name} {$user.last_name} {$user.avatar}</li>)
-      return (<li key={$user.id}>{$user.first_name} {$user.last_name} <img src={$user.avatar}></img></li>)
+      return (<article key={$user.id}>
+                <div className="title">
+                  <h2>{$user.first_name} {$user.last_name}</h2>
+                </div>
+                <img className="pic" src={$user.avatar}></img>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+              </article>)
     });
   }
+
+/*className="col-md-2 col-md-offset-5 col-lg-2 col-lg-offset-5 col-sm-2 col-sm-offset-5 col-xs-4 col-xs-offset-4"*/
 
   render(){
     if(this.state.users.length == 0) {
@@ -91,12 +45,16 @@ class ListUsers extends React.Component{
     }
     console.log("my state ", this.state)
 
-
     return(
 
       <div>
-        User List
-        {this.renderUsers()}
+        <header>
+          <h1>User List</h1>
+        </header>
+        <main>
+          {this.renderUsers()}
+          {/*}<button className="btn btn-success col-md-2 col-md-offset-5 col-lg-2 col-lg-offset-5 col-sm-2 col-sm-offset-5 col-xs-4 col-xs-offset-4">Do Nothing</button>*/}
+        </main>
       </div>
     )
   }
