@@ -1,7 +1,5 @@
 'use strict';
 
-let willRender = 0;
-
 class Blog extends React.Component {
   constructor(props) {
     super(props);
@@ -13,8 +11,9 @@ class Blog extends React.Component {
     this.locationSearch = this.locationSearch.bind(this);
   }
 
+  /*This function fetches appends the inputted latitude and longitude and appends them to the API url to fetch the data.
+  */
   locationSearch() {
-    //let concreteLat = this.myLatitud
     const proxyurl = "https://cors-anywhere.herokuapp.com/";
     const dataList = [];
       let url = `https://api.darksky.net/forecast/84e636b4f181398b4c799662fd1d9914/${this.myLatitude()},${this.myLongitude()}`;
@@ -33,6 +32,8 @@ class Blog extends React.Component {
     });
 }
 
+/*This function renders the state info as an html element
+*/
 renderWeather() {
   return this.state.list.map(function($city) {
     return (<article>
@@ -48,6 +49,8 @@ renderWeather() {
   });
 }
 
+/*This function takes the inputted latitude
+*/
 myLatitude () {
   let latInput, Lati;
   latInput = document.getElementById('myLatID');
@@ -56,6 +59,8 @@ myLatitude () {
   return Lati;
 }
 
+/*This function takes the inputted longitude
+*/
 myLongitude () {
   let longInput, Longi;
   longInput = document.getElementById('myLongID');
@@ -85,7 +90,7 @@ render() {
         <button type="button" className="btn btn-info" onClick={this.locationSearch}>Search</button>
       </div>
       <div id="paragraphdiv">
-          <p>(Examples --- New York: 42.3601,-71.0589, Los Angeles: 37.8267,-122.4233, Austin: 30.2672,-97.7431)</p>
+          <p>(Examples --- New York: 42.3601,-71.0589, Los Angeles: 37.8267,-122.4233, Chicago: 41.8781,-87.6298)</p>
       </div>
       <main>
         {this.renderWeather()}
@@ -96,10 +101,4 @@ render() {
 }
 }
 
-function REALrender() {
-    if (willRender = 1) {
-      ReactDOM.render(<Blog />, document.getElementById('blog'));
-    }
-}
-
-REALrender();
+ReactDOM.render(<Blog />, document.getElementById('blog'));
