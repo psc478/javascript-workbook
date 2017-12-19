@@ -1,0 +1,56 @@
+header {
+background-color: rgb(194,192,189);
+width: 900px;
+height: 150px;
+margin: auto;
+display: flex;
+justify-content: center;
+align-items: center;
+}
+
+h1 {
+color: black;
+font-size: 300%;
+font-family: "Impact";
+}
+
+main {
+background-color: black;
+color: white;
+width: 900px;
+margin: auto;
+box-sizing: border-box;
+display: flex;
+align-items: center;
+justify-content: center;
+padding: 45px 20px 45px 20px;
+}
+
+.myInput {
+    width: 100%; /* Full-width */
+    font-size: 16px; /* Increase font-size */
+    padding: 12px 20px 12px 40px; /* Add some padding */
+    border: 1px solid #ddd; /* Add a grey border */
+    margin-bottom: 12px; /* Add some space below the input */
+}
+
+.inputdiv {
+  margin: auto;
+  width: 900px;
+  background-color: black;
+}
+
+#buttondiv, #paragraphdiv {
+  background-color: black;
+  color: white;
+  margin: auto;
+  width: 900px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+button {
+  margin: auto;
+  width: 700px;
+}
